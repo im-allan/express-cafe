@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { Role } from '../constants';
 
 const UserSchema = new Schema({
   name: {
@@ -20,7 +21,7 @@ const UserSchema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: ['ADMIN_ROLE', 'USER_ROLE']
+    enum: [Role.ADMIN_ROLE, Role.USER_ROLE, Role.SALES_ROLE]
   },
   status: {
     type: Boolean,
@@ -30,6 +31,11 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false
   },
-})
+});
+
+UserSchema.methods.toJSON = function () {
+  const {__v, password, ...user} = this.toObject();
+  return user;
+}
 
 export default model('User', UserSchema);
