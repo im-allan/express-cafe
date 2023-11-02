@@ -1,19 +1,17 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { validateFields } from '../middlewares/validate-fields';
+import { validateFields, validateJWT, isAdminRole } from '../middlewares';
+
 import { existEmail, existUserById, isValidRole } from '../helpers/db-validator';
 
-import { usersGet, usersPost, usersPut, usersDelete } from '../controllers/users.controller';
+import { usersGet, usersPost, usersPut, usersDelete } from '../controllers/user.controller';
 
 const router = Router();
-
-module.exports = router;
-
 router.get('/', usersGet)
 
 router.put('/:id', [
-  check('id', 'No es un ID válido').isMongoId(),
+  check('id', 'ERROR: No es un id válido').isMongoId(),
   check('id').custom(existUserById),
   check('role').custom(isValidRole),
   validateFields
@@ -29,7 +27,11 @@ router.post('/', [
 ], usersPost)
 
 router.delete('/:id', [
-  check('id', 'No es un ID válido').isMongoId(),
+  validateJWT,
+  isAdminRole,
+  check('id', 'ERROR: No es un id válido').isMongoId(),
   check('id').custom(existUserById),
   validateFields
 ], usersDelete)
+
+export default router;

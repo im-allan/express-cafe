@@ -53,6 +53,6 @@ export const usersDelete = async(req: Request, res: Response) => {
   const { id } = req.params;
 
   const user = await User.findByIdAndUpdate(id, {status: false});
-
-  res.json(user)
+  
+  res.json(user);
 }
