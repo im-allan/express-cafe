@@ -4,7 +4,7 @@ import User from '../models/user';
 export const isValidRole = async(role:string)=> {
   const existRole = await Role.findOne({ role });
   if (!existRole) {
-    throw new Error(`El rol ${role} no está registrado en la base de datos`)
+    throw new Error(`ERROR: El rol ${role} no está registrado en la base de datos`)
   }
 }
 
@@ -18,6 +18,6 @@ export const existEmail = async(email: string) => {
 export const existUserById = async(id: string) => {
   const existUser = await User.findById(id);
   if (!existUser) {
-    throw new Error(`No existe un usuario con el id ${id}`);
+    throw new Error(`ERROR: No existe un usuario con el id ${id}`);
   }
 }
