@@ -33,8 +33,7 @@
       // console.log('id_token',response.credential);
 
       const body = { id_token: response.credential }
-
-      fetch(`${process.env.URL}/api/auth/google`, {
+      fetch('https://express-cafe-production.up.railway.app/api/auth/google', {
         method: 'POST',
         headers: {
           'Content-Type':'application/json'
