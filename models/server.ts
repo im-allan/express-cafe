@@ -3,21 +3,34 @@ import { dbConnection } from '../database/config.db';
 
 import userRoutes from '../routes/user.routes';
 import authRoutes from '../routes/auth.routes';
+import categoriesRoutes from '../routes/categories.routes';
+import productsRoutes from '../routes/products.routes';
+import searchRoutes from '../routes/search.routes';
 
 const cors = require('cors')
 class Server {
   
   app: Express;
   port: string | undefined;
-  authPath: string;
-  usersPath: string;
+  paths: {
+    auth: string;
+    categories: string;
+    products: string;
+    search: string;
+    users: string;
+  };
 
   constructor () {
     this.app = express();
     this.port = process.env.PORT;
-    this.authPath = '/api/auth';
-    this.usersPath = '/api/users';
 
+    this.paths = {
+      auth:'/api/auth',
+      categories:'/api/categories',
+      products:'/api/products',
+      search: '/api/search',
+      users:'/api/users'
+    }
     // Conectar a bd
     this.connectDB();
 
@@ -44,8 +57,11 @@ class Server {
   }
 
   routes() {
-    this.app.use( this.authPath, authRoutes);
-    this.app.use( this.usersPath, userRoutes);
+    this.app.use( this.paths.auth, authRoutes);
+    this.app.use( this.paths.categories, categoriesRoutes);
+    this.app.use( this.paths.products, productsRoutes);
+    this.app.use( this.paths.users, userRoutes);
+    this.app.use( this.paths.search, searchRoutes);
   }
   
   listen(){
