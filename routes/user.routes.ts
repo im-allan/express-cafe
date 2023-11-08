@@ -5,7 +5,7 @@ import { validateFields, validateJWT, isAdminRole } from '../middlewares';
 
 import { existEmail, existUserById, isValidRole } from '../helpers/db-validator';
 
-import { usersGet, usersPost, usersPut, usersDelete } from '../controllers/user.controller';
+import { usersGet, usersPost, usersPut, usersDelete } from '../controllers/user.controllers';
 
 const router = Router();
 router.get('/', usersGet)
